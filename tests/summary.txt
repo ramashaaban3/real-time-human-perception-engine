@@ -1,0 +1,20 @@
+
+TEST SUMMARY
+============
+
+Total tests: 20
+Passed: 14
+Failed: 6
+Missing files: 0
+Runtime errors: 0
+
+Action accuracy: 16/20
+People count accuracy: 16/20
+Position accuracy: 17/20
+
+False trigger count: 0
+Detection error count: 4
+Position error count: 3
+
+Repeat per test: 3
+Average latency_ms: 531.65

@@ -1,38 +1,23 @@
-# sqlite3: Python'ın yerleşik SQLite kütüphanesi
 import sqlite3
-
-# Path: dosya yolu yönetimini daha temiz yapar
 from pathlib import Path
+import csv
 
 
-# Veritabanı dosyasının yolu
-# app/events.db dosyası oluşturulacak
 DB_PATH = Path("app/events.db")
 
 
-# Veritabanına bağlantı açan fonksiyon
 def get_connection():
-
-    # SQLite bağlantısı oluşturulur
     conn = sqlite3.connect(DB_PATH)
-
-    # Satırlara hem index ile hem kolon adıyla erişebilmek için
     conn.row_factory = sqlite3.Row
-
     return conn
 
 
-# Veritabanı ve tabloyu ilk kez oluşturur
 def init_db():
-
-    # Bağlantı açılır
     conn = get_connection()
-
-    # SQL komutları çalıştırmak için cursor oluşturulur
     cursor = conn.cursor()
 
-    # events tablosu yoksa oluşturulur
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE IF NOT EXISTS events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         created_at TEXT NOT NULL,
@@ -49,16 +34,13 @@ def init_db():
         cooldown_remaining_sec REAL NOT NULL,
         e2e_latency_ms REAL NOT NULL
     )
-    """)
+    """
+    )
 
-    # Değişiklikler kaydedilir
     conn.commit()
-
-    # Bağlantı kapatılır
     conn.close()
 
 
-# Yeni bir event kaydı ekleyen fonksiyon
 def insert_event(
     created_at: str,
     people_count: int,
@@ -74,15 +56,11 @@ def insert_event(
     cooldown_remaining_sec: float,
     e2e_latency_ms: float,
 ):
-
-    # Veritabanı bağlantısı açılır
     conn = get_connection()
-
-    # Cursor oluşturulur
     cursor = conn.cursor()
 
-    # Yeni kayıt eklenir
-    cursor.execute("""
+    cursor.execute(
+        """
     INSERT INTO events (
         created_at,
         people_count,
@@ -99,24 +77,103 @@ def insert_event(
         e2e_latency_ms
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (
-        created_at,
-        people_count,
-        int(detected),              # bool → 0/1
-        confidence,
-        position,
-        inference_time_ms,
-        fps,
-        action,
-        reason,
-        int(stable_detection),      # bool → 0/1
-        int(cooldown_active),       # bool → 0/1
-        cooldown_remaining_sec,
-        e2e_latency_ms,
-    ))
+    """,
+        (
+            created_at,
+            people_count,
+            int(detected),
+            confidence,
+            position,
+            inference_time_ms,
+            fps,
+            action,
+            reason,
+            int(stable_detection),
+            int(cooldown_active),
+            cooldown_remaining_sec,
+            e2e_latency_ms,
+        ),
+    )
 
-    # Değişiklikler kaydedilir
     conn.commit()
-
-    # Bağlantı kapatılır
     conn.close()
+
+
+def get_all_events(limit: int = 100):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    rows = cursor.execute(
+        """
+    SELECT * FROM events
+    ORDER BY id DESC
+    LIMIT ?
+    """,
+        (limit,),
+    ).fetchall()
+
+    conn.close()
+
+    return [dict(row) for row in rows]
+
+
+def get_latest_event():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    row = cursor.execute(
+        """
+    SELECT * FROM events
+    ORDER BY id DESC
+    LIMIT 1
+    """
+    ).fetchone()
+
+    conn.close()
+
+    return dict(row) if row else None
+
+
+def export_events_to_csv(csv_path: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    rows = cursor.execute(
+        """
+    SELECT * FROM events
+    ORDER BY id DESC
+    """
+    ).fetchall()
+
+    conn.close()
+
+    if not rows:
+        with open(csv_path, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                [
+                    "id",
+                    "created_at",
+                    "people_count",
+                    "detected",
+                    "confidence",
+                    "position",
+                    "inference_time_ms",
+                    "fps",
+                    "action",
+                    "reason",
+                    "stable_detection",
+                    "cooldown_active",
+                    "cooldown_remaining_sec",
+                    "e2e_latency_ms",
+                ]
+            )
+        return
+
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+
+        writer.writerow(rows[0].keys())
+
+        for row in rows:
+            writer.writerow(row)

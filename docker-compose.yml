@@ -22,7 +22,10 @@ services:
     ports:
       - "8002:8002"
     environment:
-      - REASONING_MODE=rules
+      - MODE=${MODE}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL}
+      - OPENAI_TIMEOUT_SEC=${OPENAI_TIMEOUT_SEC}
     volumes:
       - ./shared:/app/shared:ro
     depends_on:
@@ -33,3 +36,10 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+  orchestrator:
+    build: ./orchestrator
+    ports:
+    - "8000:8000"
+    depends_on:
+    - perception
+    - reasoning

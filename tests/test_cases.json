@@ -1,0 +1,202 @@
+[
+  {
+    "id": "tc_01",
+    "description": "Uzakta tek kişi",
+    "image_path": "datasets/tests/image_1.jpg",
+    "expected_action": "GREET",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "center",
+    "category": "single_far"
+  },
+  {
+    "id": "tc_02",
+    "description": "Indoor ortamda tek kişi",
+    "image_path": "datasets/tests/image_2.jpg",
+    "expected_action": "GREET",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "left",
+    "category": "indoor_single"
+  },
+  {
+    "id": "tc_03",
+    "description": "Birden fazla kişi",
+    "image_path": "datasets/tests/image_3.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "multi_person"
+  },
+  {
+    "id": "tc_04",
+    "description": "İnsan olmayan sahne",
+    "image_path": "datasets/tests/image_4.jpg",
+    "expected_action": "NO_ACTION",
+    "expected_people_min": 0,
+  "expected_people_max": 0,
+    "expected_position": null,
+    "category": "no_person"
+  },
+  {
+    "id": "tc_05",
+    "description": "Karmaşık çok kişili sahne",
+    "image_path": "datasets/tests/image_5.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "multi_person"
+  },
+  {
+    "id": "tc_06",
+    "description": "Boş masa sahnesi",
+    "image_path": "datasets/tests/image_6.jpg",
+    "expected_action": "NO_ACTION",
+    "expected_people_min": 0,
+  "expected_people_max": 0,
+    "expected_position": null,
+    "category": "empty_scene"
+  },
+  {
+    "id": "tc_07",
+    "description": "Ortada yürüyen kişi",
+    "image_path": "datasets/tests/image_7.jpg",
+    "expected_action": "GREET",
+    "expected_people_min": 1,
+  "expected_people_max": 1,
+    "expected_position": "center",
+    "category": "single_person"
+  },
+  {
+    "id": "tc_08",
+    "description": "Kalabalık sokak sahnesi",
+    "image_path": "datasets/tests/image_8.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "left",
+    "category": "crowded"
+  },
+  {
+    "id": "tc_09",
+    "description": "Yan yana yürüyen iki kişi",
+    "image_path": "datasets/tests/image_9.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "multi_person"
+  },
+  {
+    "id": "tc_10",
+    "description": "Uzak kalabalık",
+    "image_path": "datasets/tests/image_10.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+   "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "distant_people"
+  },
+  {
+    "id": "tc_11",
+    "description": "İki polis memuru",
+    "image_path": "datasets/tests/image_11.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "left",
+    "category": "two_people"
+  },
+  {
+    "id": "tc_12",
+    "description": "Yakın partial insan",
+    "image_path": "datasets/tests/image_12.jpg",
+    "expected_action": "ALIGN_REQUEST",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "left",
+    "category": "partial_person"
+  },
+  {
+    "id": "tc_13",
+    "description": "Kalabalık meydan",
+    "image_path": "datasets/tests/image_13.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "crowded"
+  },
+  {
+    "id": "tc_14",
+    "description": "Karşılıklı yürüyen insanlar",
+    "image_path": "datasets/tests/image_14.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "crowded_walk"
+  },
+  {
+    "id": "tc_15",
+    "description": "Yakın sağ tarafta kişi",
+    "image_path": "datasets/tests/image_15.jpg",
+    "expected_action": "ALIGN_REQUEST",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "left",
+    "category": "close_person"
+  },
+  {
+    "id": "tc_16",
+    "description": "Kısmi görünüm solda",
+    "image_path": "datasets/tests/image_16.jpg",
+    "expected_action": "ALIGN_REQUEST",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "left",
+    "category": "partial_view"
+  },
+  {
+    "id": "tc_17",
+    "description": "Uzak yürüyen insanlar",
+    "image_path": "datasets/tests/image_17.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "left",
+    "category": "distant_people"
+  },
+  {
+    "id": "tc_18",
+    "description": "Yaya geçidinde aile",
+    "image_path": "datasets/tests/image_18.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "family_crossing"
+  },
+  {
+    "id": "tc_19",
+    "description": "Indoor çok kişili ortam",
+    "image_path": "datasets/tests/image_21.jpg",
+    "expected_action": "MULTI_PERSON_WARN",
+    "expected_people_min": 2,
+    "expected_people_max": 10,
+    "expected_position": "center",
+    "category": "indoor_multi"
+  },
+  {
+    "id": "tc_20",
+    "description": "Uzakta tek kişi yol üzerinde",
+    "image_path": "datasets/tests/image_30.jpg",
+    "expected_action": "GREET",
+    "expected_people_min": 1,
+    "expected_people_max": 1,
+    "expected_position": "center",
+    "category": "single_far"
+  }
+]

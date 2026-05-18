@@ -35,3 +35,44 @@ class DecisionResult(BaseModel):
     cooldown_remaining_sec: float = Field(
         ..., ge=0.0, description="Remaining cooldown duration in seconds"
     )
+
+
+class EventRecord(BaseModel):
+    id: int
+    created_at: str
+    people_count: int
+    detected: bool
+    confidence: float
+    position: Optional[str]
+    inference_time_ms: float
+    fps: float
+    action: str
+    reason: str
+    stable_detection: bool
+    cooldown_active: bool
+    cooldown_remaining_sec: float
+    e2e_latency_ms: float
+
+# LLM katmanı için dönecek yeni response modeli
+class LLMDecisionResult(BaseModel):
+
+    # Son karar
+    action: str
+
+    # Robotun Türkçe söyleyeceği cümle
+    utterance_tr: str
+
+    # Güven skoru
+    certainty: float = Field(..., ge=0.0, le=1.0)
+
+    # Sonucun kaynağı
+    # örnek: "rules", "llm", "llm_fallback_rules"
+    source: str
+
+    # Açıklama / sebep
+    reason: Optional[str] = None
+
+    # Aşağıdaki alanlar debug ve analiz için yararlı
+    stable_detection: Optional[bool] = None
+    cooldown_active: Optional[bool] = None
+    cooldown_remaining_sec: Optional[float] = None
